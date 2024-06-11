@@ -3,9 +3,35 @@ import DefaultLayout from "@/Custom/Layout/DefaultLayout";
 import { useForm } from "@inertiajs/react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import {Link} from "@inertiajs/react";
+import { Link } from "@inertiajs/react";
+//import { usePage } from '@inertiajs/inertia-react';
+import Select from "react-select";
 
-export default () => {
+export default ({ kategori, satuanBesar, satuanKecil }) => {
+
+    const [hargaJual, setHargaJual] = useState('0')
+    const [hargaBeli, setHargaBeli] = useState('0')
+    const [selectedKategori, setSelectedKategori] = useState(null)
+    const [selectedSatuanKecil, setSelectedSatuanKecil] = useState(null)
+    const [selectedSatuanBesar, setSelectedSatuanBesar] = useState(null)
+
+    //const { errors } = usePage().props;
+
+    const kategoriList = kategori.map((item) => ({
+        value: item.kode,
+        label: item.kode,
+    }));
+
+    const satuanBesarList = satuanBesar.map((item) => ({
+        value: item.nama,
+        label: item.nama
+    }))
+
+    const satuanKecilList = satuanKecil.map((item) => ({
+        value: item.nama,
+        label: item.nama
+    }))
+
     const { data, setData, post, processing, errors, reset } = useForm({
         barcode: "",
         nama: "",
@@ -18,6 +44,45 @@ export default () => {
         harga_beli: 0,
     });
 
+    const formatNumber = (value) => {
+        // Menggunakan fungsi Intl.NumberFormat untuk memisahkan ribuan
+        return new Intl.NumberFormat().format(value);
+    };
+
+    const handleChangeHargaJual = (e) => {
+        const cleanedValue = e.target.value.replace(/\D/g, "");
+        const formattedValue = formatNumber(cleanedValue);
+        setHargaJual(formattedValue)
+        setData('harga_jual', parseFloat(cleanedValue))
+
+    };
+
+    const handleChangeHargaBeli= (e) => {
+        const cleanedValue = e.target.value.replace(/\D/g, "");
+        const formattedValue = formatNumber(cleanedValue);
+        setHargaBeli(formattedValue)
+        setData('harga_beli', parseFloat(cleanedValue))
+
+    };
+
+    const handleChangeKategori = (selected) => {
+        setSelectedKategori(selected)
+        const val = selected ? selected.value : ""
+        setData('kategori', val)
+    }
+
+    const handleChangeSatuanKecil = (selected) => {
+        setSelectedSatuanKecil(selected)
+        const val = selected ? selected.value : ""
+        setData('satuan_kecil', val)
+    }
+
+    const handleChangeSatuanBesar = (selected) => {
+        setSelectedSatuanBesar(selected)
+        const val = selected ? selected.value : ""
+        setData('satuan_besar', val)
+    }
+
     const onChangeBarcode = async (val) => {
         await axios
             .post(route("getData"), {
@@ -25,6 +90,11 @@ export default () => {
             })
             .then((res) => {
                 const response = res.data;
+                if(response){
+                    setSelectedKategori({label: response.kategori, value: response.kategori})
+                    setSelectedSatuanKecil({label: response.satuan, value: response.satuan})
+                    setSelectedSatuanBesar({label: response.satuanbeli, value: response.satuanbeli})
+                }
                 setData({
                     barcode: data.barcode,
                     nama: response.nama,
@@ -49,7 +119,8 @@ export default () => {
         post(route("store"), {
             preserveScroll: false,
             onSuccess: () => {
-                reset();
+                //reset();
+                location.reload();
                 Swal.fire({
                     position: "center",
                     icon: "success",
@@ -60,6 +131,48 @@ export default () => {
             },
         });
     };
+
+    const customStyles = {
+        control: (provided, state) => ({
+          ...provided,
+          backgroundColor: '#2d2f35', // Warna latar belakang yang gelap
+          borderColor: state.isFocused ? '#6c757d' : '#495057', // Warna border saat fokus
+          color: 'white', // Warna teks
+          minHeight: '38px', // Menyesuaikan tinggi agar sesuai dengan field lainnya
+          boxShadow: state.isFocused ? '0 0 0 1px #6c757d' : 'none', // Menghilangkan shadow biru default
+          '&:hover': {
+            borderColor: '#6c757d', // Warna border saat hover
+          },
+        }),
+        singleValue: (provided) => ({
+          ...provided,
+          color: 'white', // Warna teks
+        }),
+        menu: (provided) => ({
+          ...provided,
+          backgroundColor: '#2d2f35', // Warna latar belakang menu dropdown
+          color: 'white', // Warna teks di menu dropdown
+        }),
+        option: (provided, state) => ({
+          ...provided,
+          backgroundColor: state.isSelected ? '#495057' : '#2d2f35', // Warna latar belakang saat dipilih
+          color: 'white', // Warna teks opsi
+          '&:hover': {
+            backgroundColor: '#6c757d', // Warna latar belakang saat hover
+          },
+        }),
+        placeholder: (provided) => ({
+          ...provided,
+          color: '#6c757d', // Warna teks placeholder
+        }),
+        input: (provided) => ({
+          ...provided,
+          color: 'white', // Warna teks input
+          '& input': {
+            boxShadow: 'none', // Menghilangkan shadow biru pada input
+          },
+        }),
+      };
 
     return (
         <DefaultLayout>
@@ -91,6 +204,7 @@ export default () => {
                                         }
                                         className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                                     />
+                                     {errors.barcode && <span style={{color: 'red'}}>{errors.barcode}</span>}
                                 </div>
 
                                 <div className="w-full xl:w-1/2">
@@ -100,16 +214,36 @@ export default () => {
                                     <input
                                         type="text"
                                         placeholder="Nama Barang"
-                                        onChange={(e) => setData('nama', e.target.value)}
+                                        onChange={(e) =>
+                                            setData("nama", e.target.value)
+                                        }
                                         value={data.nama}
                                         className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                                     />
+                                     {errors.nama && <span style={{color: 'red'}}>{errors.nama}</span>}
                                 </div>
                             </div>
-                            <SelectGroup
+                            {/* <SelectGroup
                                 value={data.kategori}
                                 onChange={onChangeKategori}
-                            />
+                            /> */}
+                            <div className="mb-4.5">
+                                <label className="mb-2.5 block text-black dark:text-white">
+                                    {" "}
+                                    Kategori
+                                </label>
+
+                                <div className="relative z-20 bg-transparent dark:bg-form-input">
+                                    <Select
+                                        styles={customStyles}
+                                        options={kategoriList}
+                                        isClearable={true}
+                                        value={selectedKategori}
+                                        onChange={handleChangeKategori}
+                                    />
+                                    {errors.kategori && <span style={{color: 'red'}}>{errors.kategori}</span>}
+                                </div>
+                            </div>
                             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                                 <div className="w-full xl:w-1/2">
                                     <label className="mb-2.5 block text-black dark:text-white">
@@ -133,13 +267,20 @@ export default () => {
                                     <label className="mb-2.5 block text-black dark:text-white">
                                         Satuan Kecil
                                     </label>
-                                    <input
+                                    <Select
+                                        styles={customStyles}
+                                        options={satuanKecilList}
+                                        isClearable={true}
+                                        value={selectedSatuanKecil}
+                                        onChange={handleChangeSatuanKecil}
+                                    />
+                                    {/* <input
                                         value={data.satuan_kecil}
                                         onChange={(e) => data.satuan_kecil}
                                         type="text"
                                         placeholder="Satuan Kecil"
                                         className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                                    />
+                                    /> */}
                                 </div>
                             </div>
                             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
@@ -165,13 +306,20 @@ export default () => {
                                     <label className="mb-2.5 block text-black dark:text-white">
                                         Satuan Besar
                                     </label>
-                                    <input
+                                    <Select
+                                        styles={customStyles}
+                                        options={satuanBesarList}
+                                        isClearable={true}
+                                        value={selectedSatuanBesar}
+                                        onChange={handleChangeSatuanBesar}
+                                    />
+                                    {/* <input
                                         value={data.satuan_besar}
                                         onChange={(e) => data.satuan_besar}
                                         type="text"
                                         placeholder="Satuan Besar"
                                         className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                                    />
+                                    /> */}
                                 </div>
                             </div>
                             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
@@ -180,14 +328,9 @@ export default () => {
                                         Harga Jual
                                     </label>
                                     <input
-                                        value={data.harga_jual}
-                                        onChange={(e) =>
-                                            setData(
-                                                "harga_jual",
-                                                e.target.value
-                                            )
-                                        }
-                                        type="number"
+                                        onChange={handleChangeHargaJual}
+                                        value={hargaJual}
+                                        type="text"
                                         placeholder="Harga Jual"
                                         className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                                     />
@@ -198,20 +341,18 @@ export default () => {
                                         Harga Beli
                                     </label>
                                     <input
-                                        value={data.harga_beli}
-                                        onChange={(e) =>
-                                            setData(
-                                                "harga_beli",
-                                                e.target.value
-                                            )
-                                        }
-                                        type="number"
+                                        value={hargaBeli}
+                                        onChange={handleChangeHargaBeli}
+                                        type="text"
                                         placeholder="Harga Beli"
                                         className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                                     />
                                 </div>
                             </div>
-                            <button type="submit" className="flex justify-center w-full p-3 font-medium rounded bg-primary text-gray hover:bg-opacity-90">
+                            <button
+                                type="submit"
+                                className="flex justify-center w-full p-3 font-medium rounded bg-primary text-gray hover:bg-opacity-90"
+                            >
                                 Submit
                             </button>
                         </div>
