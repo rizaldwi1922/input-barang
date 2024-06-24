@@ -93,7 +93,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                             {/* <!-- Menu Item Calendar --> */}
                             <li>
                                 <Link
-                                    href="/input"
+                                    href="/items/input"
                                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4`}
                                 >
                                     <svg
@@ -114,7 +114,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                             </li>
                             <li>
                                 <Link
-                                    href="/list"
+                                    href="/items/list"
                                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4`}
                                 >
                                     <svg
@@ -135,14 +135,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                             </li>
                         </ul>
                     </div>
-                    {/* <div>
+                    <div>
                         <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
                             MASTER DATA
                         </h3>
                         <ul className="mb-6 flex flex-col gap-1.5">
                             <li>
                                 <Link
-                                    href="/input"
+                                    href="/category/list"
                                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4`}
                                 >
                                     <svg
@@ -204,7 +204,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                 </Link>
                             </li>
                         </ul>
-                    </div> */}
+                    </div>
                 </nav>
                 {/* <!-- Sidebar Menu --> */}
             </div>

@@ -38,11 +38,23 @@ Route::middleware('auth')->group(function () {
     })->name('qr');
 
     Route::controller(App\Http\Controllers\BarangController::class)->group(function () {
-        Route::get('/input', 'input')->name('input');
-        Route::get('/list', 'listData')->name('listData');
-        Route::get('/getAllData', 'getAllData')->name('getAllData');
-        Route::post('/getData', 'getData')->name('getData');
-        Route::post('/store', 'store')->name('store');
+        Route::prefix('items')->group(function () {
+            Route::get('/input', 'input')->name('input');
+            Route::get('/list', 'listData')->name('listData');
+            Route::get('/getAllData', 'getAllData')->name('getAllData');
+            Route::post('/getData', 'getData')->name('getData');
+            Route::post('/store', 'store')->name('store');
+        });
+        
+    });
+
+    Route::controller(App\Http\Controllers\CategoryController::class)->group(function () {
+        Route::prefix('category')->group(function () {
+            Route::get('/list', 'index')->name('category');
+            Route::get('/getAllData', 'getAllData')->name('CategoryGetAllData');
+            Route::post('/update', 'update')->name('CategoryUpdate');
+            Route::get('/form', 'form')->name('CategoryForm');
+        });
     });
 });
 

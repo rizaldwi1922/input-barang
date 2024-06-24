@@ -7,7 +7,7 @@ import { Link } from "@inertiajs/react";
 //import { usePage } from '@inertiajs/inertia-react';
 import Select from "react-select";
 
-export default ({ kategori, satuanBesar, satuanKecil }) => {
+export default () => {
 
     const [hargaJual, setHargaJual] = useState('0')
     const [hargaBeli, setHargaBeli] = useState('0')
@@ -17,20 +17,20 @@ export default ({ kategori, satuanBesar, satuanKecil }) => {
 
     //const { errors } = usePage().props;
 
-    const kategoriList = kategori.map((item) => ({
-        value: item.kode,
-        label: item.kode,
-    }));
+    // const kategoriList = kategori.map((item) => ({
+    //     value: item.kode,
+    //     label: item.kode,
+    // }));
 
-    const satuanBesarList = satuanBesar.map((item) => ({
-        value: item.nama,
-        label: item.nama
-    }))
+    // const satuanBesarList = satuanBesar.map((item) => ({
+    //     value: item.nama,
+    //     label: item.nama
+    // }))
 
-    const satuanKecilList = satuanKecil.map((item) => ({
-        value: item.nama,
-        label: item.nama
-    }))
+    // const satuanKecilList = satuanKecil.map((item) => ({
+    //     value: item.nama,
+    //     label: item.nama
+    // }))
 
     const { data, setData, post, processing, errors, reset } = useForm({
         barcode: "",
@@ -234,13 +234,13 @@ export default ({ kategori, satuanBesar, satuanKecil }) => {
                                 </label>
 
                                 <div className="relative z-20 bg-transparent dark:bg-form-input">
-                                    <Select
+                                    {/* <Select
                                         styles={customStyles}
                                         options={kategoriList}
                                         isClearable={true}
                                         value={selectedKategori}
                                         onChange={handleChangeKategori}
-                                    />
+                                    /> */}
                                     {errors.kategori && <span style={{color: 'red'}}>{errors.kategori}</span>}
                                 </div>
                             </div>
@@ -267,13 +267,13 @@ export default ({ kategori, satuanBesar, satuanKecil }) => {
                                     <label className="mb-2.5 block text-black dark:text-white">
                                         Satuan Kecil
                                     </label>
-                                    <Select
+                                    {/* <Select
                                         styles={customStyles}
                                         options={satuanKecilList}
                                         isClearable={true}
                                         value={selectedSatuanKecil}
                                         onChange={handleChangeSatuanKecil}
-                                    />
+                                    /> */}
                                     {/* <input
                                         value={data.satuan_kecil}
                                         onChange={(e) => data.satuan_kecil}
@@ -306,13 +306,13 @@ export default ({ kategori, satuanBesar, satuanKecil }) => {
                                     <label className="mb-2.5 block text-black dark:text-white">
                                         Satuan Besar
                                     </label>
-                                    <Select
+                                    {/* <Select
                                         styles={customStyles}
                                         options={satuanBesarList}
                                         isClearable={true}
                                         value={selectedSatuanBesar}
                                         onChange={handleChangeSatuanBesar}
-                                    />
+                                    /> */}
                                     {/* <input
                                         value={data.satuan_besar}
                                         onChange={(e) => data.satuan_besar}
