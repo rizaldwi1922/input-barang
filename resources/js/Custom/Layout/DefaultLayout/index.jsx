@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import Header from '@/Custom/Component/Header';
 import Sidebar from '@/Custom/Component/Sidebar';
 
-const DefaultLayout = ({ children }) => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+const DefaultLayout = ({ children, active }) => {
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   return (
     <div className="dark:bg-boxdark-2 dark:text-bodydark">
       {/* <!-- ===== Page Wrapper Start ===== --> */}
       <div className="flex h-screen overflow-hidden">
         {/* <!-- ===== Sidebar Start ===== --> */}
-        <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} active={active} />
         {/* <!-- ===== Sidebar End ===== --> */}
 
         {/* <!-- ===== Content Area Start ===== --> */}

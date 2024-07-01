@@ -2,7 +2,7 @@ import React from "react";
 import GenericForm from "@/Custom/Component/GenericForm";
 import DefaultLayout from "@/Custom/Layout/DefaultLayout";
 
-export default ({category}) => {
+export default ({UomBig}) => {
 
     const fields = [
         {
@@ -12,14 +12,14 @@ export default ({category}) => {
         }
     ];
 
-    const label = category ? "Edit Kategori" : "Tambah Kategori"
+    const label = UomBig ? "Edit Satuan Besar" : "Tambah Satuan Besar"
 
     return (
-        <DefaultLayout active={21}>
+        <DefaultLayout active={22}>
             <GenericForm
                 fields={fields}
-                initialData={category}
-                routeName="CategoryUpdate"
+                initialData={UomBig}
+                routeName="UomBigUpdate"
                 submitButtonLabel={label}
                 label={label}
             />

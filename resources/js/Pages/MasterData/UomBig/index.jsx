@@ -11,14 +11,14 @@ export default () => {
     ];
 
     return(
-        <DefaultLayout active={21}>
+        <DefaultLayout active={22}>
             <CustomTable
-                endpoint={"CategoryGetAllData"}
+                endpoint={"UomBigGetAllData"}
                 columns={columns}
-                label={"Daftar Kategori"}
-                routeAdd={"CategoryAdd"}
-                routeUpdate={"CategoryShow"}
-                routeDelete={"CategoryDelete"}
+                label={"Daftar Satuan Besar"}
+                routeAdd={"UomBigAdd"}
+                routeUpdate={"UomBigShow"}
+                routeDelete={"UomBigDelete"}
             />
         </DefaultLayout>
     )

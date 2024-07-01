@@ -4,31 +4,31 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\UomBig;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Category;
 
-class CategoryController extends Controller
+class UomBigController extends Controller
 {
     public function index(){
-        return Inertia::render('MasterData/Category/index');
+        return Inertia::render('MasterData/UomBig/index');
     }
 
     public function form(){
-        return Inertia::render('MasterData/Category/form');
+        return Inertia::render('MasterData/UomBig/form');
     }
 
     public function show($id){
-        $category = Category::find($id);
-        return Inertia::render('MasterData/Category/form', ['category' => $category]);
+        $uomBig = UomBig::find($id);
+        return Inertia::render('MasterData/UomBig/form', ['UomBig' => $uomBig]);
     }
 
     public function getAllData(Request $request){
-        $query = Category::paginate($request->itemPerPage, ['*'], 'page', $request->page);
+        $query = UomBig::paginate($request->itemPerPage, ['*'], 'page', $request->page);
         return $query;
     }
 
     public function getAllRawData(){
-        $query = Category::get();
+        $query = UomBig::get();
         return $query;
     }
 
@@ -47,14 +47,14 @@ class CategoryController extends Controller
             ->withInput();
         }
 
-        Category::CreateOrUpdate($request);
+        UomBig::CreateOrUpdate($request);
 
         return redirect()->back();
 
     }
 
     public function destroy($id){
-        $data = Category::find($id);
+        $data = UomBig::find($id);
         $data->delete();
 
         return response()->json([

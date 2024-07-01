@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import api from "@/Service/api";
 
-const useCategory = () => {
+const useUomBig = () => {
     const app = api
-    const [category, setCategory] = useState()
+    const [uomBig, setUomBig] = useState([])
 
     const get = async() => {
-        const res = await app.RawData.fetchRaw('CategoryGetAllRawData')
-        setCategory(res)
+        const res = await app.RawData.fetchRaw('UomBigGetAllRawData')
+        setUomBig(res)
     }
 
     useEffect(() => {
@@ -16,8 +16,8 @@ const useCategory = () => {
 
     return {
         get,
-        category
+        uomBig
     }
 }
 
-export default useCategory;
+export default useUomBig;

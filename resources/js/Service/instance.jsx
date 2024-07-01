@@ -4,7 +4,7 @@ export const httpInstance = async (endpoint, method, data = null) => {
         error:'',
         success:false
     }
-    let url = route(endpoint)
+    let url = endpoint
     await axios({
         url: url,
         method: method,
