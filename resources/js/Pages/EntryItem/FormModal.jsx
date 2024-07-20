@@ -39,10 +39,9 @@ export default (props) => {
                         </label>
                         <input
                             value={currentData.item_name}
-                            onChange={handleChange}
+                            readOnly
                             name="item_name"
                             type="text"
-                            readOnly
                             placeholder="Item Name"
                             className="w-full rounded-lg border-[1.5px] border-primary bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white"
                         />
@@ -70,7 +69,7 @@ export default (props) => {
                             onChange={handleChange}
                             name="qty"
                             type="number"
-                            placeholder="Disabled label"
+                            placeholder="Kuantiti"
                             disabled=""
                             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary dark:disabled:bg-black"
                         />
@@ -107,7 +106,7 @@ export default (props) => {
                         </label>
                         <input
                             value={currentData.uom}
-                            onChange={handleChange}
+                            readOnly
                             name="uom"
                             type="text"
                             placeholder="Disabled label"
@@ -120,16 +119,30 @@ export default (props) => {
                             Stok Terakhir
                         </label>
                         <input
-                            value={currentData.uom}
-                            onChange={handleChange}
-                            name="uom"
+                            value={currentData.stockLabel}
+                            readOnly
+                            name="stockLabel"
                             type="text"
                             placeholder="Disabled label"
                             disabled=""
                             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary dark:disabled:bg-black"
                         />
                     </div>
-                    <div className="w-full px-3 mb-6 md:w-1/2 md:mb-3">
+                    <div className="w-full px-3 mb-6 md:w-1/3 md:mb-3">
+                        <label className="block mb-3 font-medium text-black dark:text-white">
+                            Kategori
+                        </label>
+                        <input
+                            value={currentData.category}
+                            readOnly
+                            name="category"
+                            type="text"
+                            placeholder="Kategori"
+                            disabled=""
+                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary dark:disabled:bg-black"
+                        />
+                    </div>
+                    <div className="w-full px-3 mb-6 md:w-1/3 md:mb-3">
                         <label className="block mb-3 text-black dark:text-white">
                             Tanggal Masuk
                         </label>
@@ -137,12 +150,12 @@ export default (props) => {
                             type="date"
                             name="input_date"
                             onChange={handleChange}
-                            value={currentData.barcode}
-                            placeholder="Barcode"
+                            value={currentData.input_date}
+                            placeholder="Input Date"
                             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                         />
                     </div>
-                    <div className="w-full px-3 mb-6 md:w-1/2 md:mb-3">
+                    <div className="w-full px-3 mb-6 md:w-1/3 md:mb-3">
                         <label className="block mb-3 text-black dark:text-white">
                             Tanggal Kadaluarsa
                         </label>
@@ -150,8 +163,8 @@ export default (props) => {
                             type="date"
                             name="expired_date"
                             onChange={handleChange}
-                            value={currentData.barcode}
-                            placeholder="Barcode"
+                            value={currentData.expired_date}
+                            placeholder="Expired Date"
                             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                         />
                     </div>

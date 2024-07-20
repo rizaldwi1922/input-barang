@@ -1,5 +1,6 @@
 import DefaultLayout from "@/Custom/Layout/DefaultLayout"
 import CustomTable from "@/Custom/Component/CustomTable"
+import { formatNumber } from "@/Custom/Component/Function/formatNumber";
 
 export default () => {
 
@@ -7,7 +8,23 @@ export default () => {
         {
             name: 'Name',
             selector: row => row.name,
-        }
+        },
+        {
+            name: 'Harga Beli',
+            selector: row => formatNumber(row.price_purchase.toString())
+        },
+        {
+            name: 'Harga Jual',
+            selector: row => formatNumber(row.price_selling.toString())
+        },
+        {
+            name: 'Kategori',
+            selector: row => row.category.name,
+        },
+        {
+            name: 'Stock',
+            selector: row => row.stock,
+        },
     ];
 
     return(

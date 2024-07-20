@@ -3,9 +3,8 @@ import DefaultLayout from "@/Custom/Layout/DefaultLayout";
 import FormModal from "./FormModal";
 import useEntryItem from "@/Hooks/useEntryItem";
 
-export default ({url}) => {
+export default ({ url }) => {
     const app = useEntryItem();
-    console.log(url)
 
     return (
         <DefaultLayout active={1}>
@@ -21,7 +20,7 @@ export default ({url}) => {
                 <div className="bg-white border rounded-sm border-stroke shadow-default dark:border-strokedark dark:bg-boxdark">
                     <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
                         <h3 className="font-medium text-black dark:text-white">
-                            Invoice 
+                            Invoice
                         </h3>
                     </div>
                     <div className="p-6.5">
@@ -32,6 +31,9 @@ export default ({url}) => {
                                 </label>
                                 <input
                                     type="text"
+                                    name="invoice_num"
+                                    value={app.invoice.invoice_num}
+                                    onChange={app.handleChangeInvoice}
                                     placeholder="Nomor Nota"
                                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                                 />
@@ -43,6 +45,9 @@ export default ({url}) => {
                                 </label>
                                 <input
                                     type="text"
+                                    name="supplier"
+                                    value={app.invoice.suppler}
+                                    onChange={app.handleChangeInvoice}
                                     placeholder="Supplier"
                                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                                 />
@@ -53,6 +58,9 @@ export default ({url}) => {
                                 </label>
                                 <input
                                     type="date"
+                                    name="invoice_date"
+                                    value={app.invoice.invoice_date}
+                                    onChange={app.handleChangeInvoice}
                                     placeholder="Tanggal Nota"
                                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                                 />
@@ -106,7 +114,7 @@ export default ({url}) => {
                                     <tr key={key}>
                                         <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                                             <h5 className="font-medium text-black dark:text-white">
-                                                {item.name}
+                                                {item.item_name}
                                             </h5>
                                         </td>
                                         <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
@@ -188,6 +196,14 @@ export default ({url}) => {
                                 ))}
                             </tbody>
                         </table>
+                        <div className="mt-5 mb-5">
+                            <button
+                                className="inline-flex items-center justify-center px-4 py-2 font-medium text-center text-white rounded-full bg-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
+                                onClick={app.insertItem}
+                            >
+                                Simpan
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

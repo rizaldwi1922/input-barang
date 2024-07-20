@@ -9,6 +9,16 @@ const getItemByBarcode = async(barcode) => {
     }
 }
 
+const insertData = async(data) => {
+    try {
+        let response = await http.httpService(route('EntryItemStore'), 'POST', data)
+        return response
+    } catch (error) {
+        throw error;
+    }
+}
+
 export default {
-    getItemByBarcode
+    getItemByBarcode,
+    insertData
 }

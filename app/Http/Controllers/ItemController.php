@@ -32,12 +32,12 @@ class ItemController extends Controller
     }
 
     public function getItem($barcode){
-        $item = Item::with('uomBig', 'uomSmall')->where('barcode', $barcode)->first();
+        $item = Item::with('uomBig', 'uomSmall', 'category')->where('barcode', $barcode)->first();
         return $item;
     }
 
     public function getAllData(Request $request){
-        $query = Item::paginate($request->itemPerPage, ['*'], 'page', $request->page);
+        $query = Item::with('uomBig', 'uomSmall', 'category')->paginate($request->itemPerPage, ['*'], 'page', $request->page);
         return $query;
     }
 

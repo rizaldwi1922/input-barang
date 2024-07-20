@@ -3,7 +3,7 @@ import Header from '@/Custom/Component/Header';
 import Sidebar from '@/Custom/Component/Sidebar';
 
 const DefaultLayout = ({ children, active }) => {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className="dark:bg-boxdark-2 dark:text-bodydark">

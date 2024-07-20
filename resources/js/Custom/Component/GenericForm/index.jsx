@@ -2,10 +2,8 @@ import React, { useEffect } from "react";
 import { useForm } from "@inertiajs/react";
 import Swal from "sweetalert2";
 import Select from "react-select";
+import { formatNumber } from "../Function/formatNumber";
 
-const formatNumber = (value) => {
-    return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-};
 
 const unformatNumber = (value) => {
     return parseFloat(value.replace(/,/g, ""));

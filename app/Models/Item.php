@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\UomBig;
 use App\Models\UomSmall;
+use App\Models\Category;
 
 class Item extends Model
 {
@@ -35,5 +36,10 @@ class Item extends Model
     public function uomSmall():BelongsTo
     {
         return $this->belongsTo(UomSmall::class, 'uom_small_id', 'id');
+    }
+
+    public function category():BelongsTo
+    {
+        return $this->belongsTo(Category::class, 'uom_small_id', 'id');
     }
 }

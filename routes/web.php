@@ -99,6 +99,7 @@ Route::middleware('auth')->group(function () {
     Route::controller(App\Http\Controllers\EntryItemController::class)->group(function() {
         Route::prefix('entry-item')->group(function() {
             Route::get('/form', 'form')->name('EntryItemForm');
+            Route::post('/insert', 'store')->name('EntryItemStore');
         });
     });
 });

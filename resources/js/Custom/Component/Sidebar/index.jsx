@@ -62,7 +62,13 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, active }) => {
                     <img src={Logo} alt="Logo" />
                 </a>
 
-                <button aria-controls="sidebar" className="block lg:hidden">
+                <button 
+                    ref={trigger}
+                    onClick={() => setSidebarOpen(!sidebarOpen)}
+                    aria-controls="sidebar"
+                    aria-expanded={sidebarOpen}
+                    className="block lg:hidden"
+                >
                     <svg
                         className="fill-current"
                         width="20"
