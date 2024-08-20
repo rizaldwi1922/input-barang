@@ -23,7 +23,7 @@ class UomBigController extends Controller
     }
 
     public function getAllData(Request $request){
-        $query = UomBig::paginate($request->itemPerPage, ['*'], 'page', $request->page);
+        $query = UomBig::where('name', 'LIKE', '%' . $request->search . '%')->paginate($request->itemPerPage, ['*'], 'page', $request->page);
         return $query;
     }
 

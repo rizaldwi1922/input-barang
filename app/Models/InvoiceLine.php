@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class InvoiceLine extends Model
 {
@@ -20,7 +22,13 @@ class InvoiceLine extends Model
         $data->price = $request->price;
         $data->input_date = $request->input_date;
         $data->expired_date = $request->expired_date;
+        $data->created_user_id = Auth::id();
         $data->save();
         return $data;
+    }
+
+    public function item():BelongsTo
+    {
+        return $this->belongsTo(Item::class, 'item_id', 'id');
     }
 }

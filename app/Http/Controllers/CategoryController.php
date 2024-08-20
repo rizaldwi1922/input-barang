@@ -23,7 +23,7 @@ class CategoryController extends Controller
     }
 
     public function getAllData(Request $request){
-        $query = Category::paginate($request->itemPerPage, ['*'], 'page', $request->page);
+        $query = Category::where('name', 'LIKE', '%' . $request->search . '%')->paginate($request->itemPerPage, ['*'], 'page', $request->page);
         return $query;
     }
 

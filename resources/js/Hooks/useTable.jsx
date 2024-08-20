@@ -10,36 +10,8 @@ const useTable = (endpoint) => {
     const [data, setData] = useState([])
     const [pageTable, setPageTable] = useState({itemPerPage: 10, page: 1})
     const [totalItem, setTotalItem] = useState(0);
+    const [search, setSearch] = useState('')
 
-    const customStyles = {
-        headCells: {
-            style: {
-                backgroundColor: "#2c3e50", // Warna latar belakang kepala kolom
-                color: "#ffffff", // Warna teks kepala kolom
-            },
-        },
-        rows: {
-            style: {
-                backgroundColor: "#34495e", // Warna latar belakang baris
-                color: "#ffffff", // Warna teks baris
-                minHeight: "50px", // Tinggi minimum baris
-            },
-        },
-        pagination: {
-            style: {
-                backgroundColor: "#2c3e50", // Warna latar belakang navigasi halaman
-                color: "#ffffff", // Warna teks navigasi halaman
-            },
-        },
-    };
-
-    const customTheme = {
-        title: {
-            fontSize: "22px", // Ukuran font judul
-            fontFamily: "Arial, sans-serif", // Keluarga font judul
-            color: "#ffffff", // Warna teks judul
-        },
-    };
 
     const handlePageChange = (val) => {
         setPageTable(prev => ({
@@ -56,6 +28,7 @@ const useTable = (endpoint) => {
     };
 
     const get = async() => {
+        pageTable['search'] = search
         const res = await comp.fetchDataTable.fetchDataTable(endpoint, pageTable)
         setData(res.data)
         setTotalItem(res.total)
@@ -104,21 +77,29 @@ const useTable = (endpoint) => {
     };
 
     useEffect(() => {
+        const delayDebounce = setTimeout(() => {
+            get()
+        }, 300);
+
+        return () => clearTimeout(delayDebounce)
+    }, [search])
+
+    useEffect(() => {
         get()
     },[endpoint, pageTable])
 
     return {
         get,
         data,
-        customStyles,
-        customTheme,
         handlePageChange,
         handleRowPerPageChange,
         totalItem,
         pageTable,
         onCreate,
         onUpdate,
-        onDelete
+        onDelete,
+        search,
+        setSearch
     }
 }
 

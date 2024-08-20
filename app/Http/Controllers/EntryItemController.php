@@ -16,6 +16,10 @@ class EntryItemController extends Controller
         return Inertia::render('EntryItem/form');
     }
 
+    public function index(){
+        return Inertia::render('EntryItem/index');
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -67,5 +71,16 @@ class EntryItemController extends Controller
             'message' => 'Data berhasil disimpan',
             'data' => $validated
         ]);
+    }
+
+    public function getAllData(Request $request)
+    {
+        $query = InvoiceHead::with(['line.item.uomBig', 'line.item.uomSmall'])
+            ->withSum(['line as total_amount' => function($query) {
+                $query->select(DB::raw('SUM(price * qty)'));
+            }], 'total_amount')
+            ->where('invoice_num', 'LIKE', '%' . $request->search . '%')
+            ->paginate($request->itemPerPage, ['*'], 'page', $request->page);
+        return $query;
     }
 }

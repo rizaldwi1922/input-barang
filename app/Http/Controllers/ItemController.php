@@ -12,15 +12,18 @@ use App\Models\UomSmall;
 
 class ItemController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         return Inertia::render('MasterData/Item/index');
     }
 
-    public function form(){
+    public function form()
+    {
         return Inertia::render('MasterData/Item/form');
     }
 
-    public function show($id){
+    public function show($id)
+    {
         $item = Item::find($id);
         $category = Category::find($item->category_id);
         $big = UomBig::find($item->uom_big_id);
@@ -31,17 +34,22 @@ class ItemController extends Controller
         return Inertia::render('MasterData/Item/form', ['item' => $item]);
     }
 
-    public function getItem($barcode){
+    public function getItem($barcode)
+    {
         $item = Item::with('uomBig', 'uomSmall', 'category')->where('barcode', $barcode)->first();
         return $item;
     }
 
-    public function getAllData(Request $request){
-        $query = Item::with('uomBig', 'uomSmall', 'category')->paginate($request->itemPerPage, ['*'], 'page', $request->page);
+    public function getAllData(Request $request)
+    {
+        $query = Item::with('uomBig', 'uomSmall', 'category')
+            ->where('name', 'LIKE', '%' . $request->search . '%')
+            ->paginate($request->itemPerPage, ['*'], 'page', $request->page);
         return $query;
     }
 
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         $messages = [
             'required'  => ':Attribute wajib di isi.',
         ];
@@ -52,8 +60,8 @@ class ItemController extends Controller
 
         if ($validator->fails()) {
             return redirect()->back()
-            ->withErrors($validator)
-            ->withInput();
+                ->withErrors($validator)
+                ->withInput();
         }
 
         //dd($request);
@@ -66,10 +74,10 @@ class ItemController extends Controller
         Item::CreateOrUpdate($request);
 
         return redirect()->back();
-
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $data = Item::find($id);
         $data->delete();
 

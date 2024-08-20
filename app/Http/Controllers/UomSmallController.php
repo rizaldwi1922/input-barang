@@ -23,7 +23,7 @@ class UomSmallController extends Controller
     }
 
     public function getAllData(Request $request){
-        $query = UomSmall::paginate($request->itemPerPage, ['*'], 'page', $request->page);
+        $query = UomSmall::where('name', 'LIKE', '%' . $request->search . '%')->paginate($request->itemPerPage, ['*'], 'page', $request->page);
         return $query;
     }
 

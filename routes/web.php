@@ -100,6 +100,8 @@ Route::middleware('auth')->group(function () {
         Route::prefix('entry-item')->group(function() {
             Route::get('/form', 'form')->name('EntryItemForm');
             Route::post('/insert', 'store')->name('EntryItemStore');
+            Route::get('/list', 'index')->name('EntryItemList');
+            Route::post('/getAllData', 'getAllData')->name('EntryItemGetAllData');
         });
     });
 });

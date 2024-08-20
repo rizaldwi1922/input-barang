@@ -123,7 +123,9 @@
 .custom-input-date-2::-webkit-calendar-picker-indicator {
   background-image: url(./images/icon/icon-arrow-down.svg);
 }
-
+.rdt_TableHead {
+  background-color: aqua !important;
+}
 [x-cloak] {
   display: none !important;
 }
